@@ -1,0 +1,7 @@
+br/com/tokiomarine/seguradora/avaliacao/Application.class
+br/com/tokiomarine/seguradora/avaliacao/controller/EstudanteController.class
+br/com/tokiomarine/seguradora/avaliacao/service/EstudandeService.class
+br/com/tokiomarine/seguradora/avaliacao/service/EstudanteServiceImpl.class
+br/com/tokiomarine/seguradora/avaliacao/repository/EstudanteRepository.class
+br/com/tokiomarine/seguradora/avaliacao/controller/EstudanteRestController.class
+br/com/tokiomarine/seguradora/avaliacao/entidade/Estudante.class
