@@ -29,12 +29,14 @@ public class EstudanteController {
 
 	@GetMapping("listar")
 	public String listarEstudantes(Model model) {
+		System.out.println("Passei aqui");
 		model.addAttribute("estudtes", service.buscarEstudantes());
 		return "index";
 	}
 
 	@PostMapping("add")
 	public String adicionarEstudante(@Valid Estudante estudante, BindingResult result, Model model) {
+		System.out.println("adicionarEstudante");
 		if (result.hasErrors()) {
 			return "cadastrar-estudante";
 		}

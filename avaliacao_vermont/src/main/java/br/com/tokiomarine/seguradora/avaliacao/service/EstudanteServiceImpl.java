@@ -1,6 +1,7 @@
 package br.com.tokiomarine.seguradora.avaliacao.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -14,6 +15,8 @@ public class EstudanteServiceImpl implements EstudandeService {
 
 	@Override
 	public void cadastrarEstudante(@Valid Estudante estudante) {
+		
+		repository.save(estudante);
 
 	}
 
@@ -25,11 +28,18 @@ public class EstudanteServiceImpl implements EstudandeService {
 	@Override
 	public List<Estudante> buscarEstudantes() {
 		
-		return null;
+		return repository.findAll();
 	}
 
 	@Override
 	public Estudante buscarEstudante(long id) {
+		
+		Optional<Estudante> optionalEstudante = repository.findById(id);
+		
+		if (optionalEstudante.isPresent()) {
+			return optionalEstudante.get();
+		}
+		
 		throw new IllegalArgumentException("Identificador inválido:" + id);
 	}
 
