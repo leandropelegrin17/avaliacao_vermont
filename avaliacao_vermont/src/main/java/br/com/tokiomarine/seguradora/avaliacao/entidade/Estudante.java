@@ -15,7 +15,7 @@ public class Estudante implements Serializable {
 	private static final long serialVersionUID = 3417953434619760983L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotNull(message = "Nome é Obrigatório")
@@ -26,8 +26,15 @@ public class Estudante implements Serializable {
 	@Column(name = "EMAIL")
 	private String email;
 	
-	@Column(name = "TELEFON")
+	@Column(name = "TELEFONE")
 	private String telefone;
+	
+	@NotNull(message = "Matricula é Obrigatório")
+	@Column(name = "MATRICULA")
+	private String matricula;
+	
+	@Column(name = "CURSO")
+	private String curso;
 
 	public Long getId() {
 		return id;
@@ -59,6 +66,22 @@ public class Estudante implements Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+	public String getCurso() {
+		return curso;
+	}
+
+	public void setCurso(String curso) {
+		this.curso = curso;
 	}
 	
 }

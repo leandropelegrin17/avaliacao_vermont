@@ -24,13 +24,14 @@ public class EstudanteController {
 
 	@GetMapping("criar")
 	public String iniciarCastrado(Estudante estudante) {
+		System.out.println("iniciarCastrado");
 		return "cadastrar-estudante";
 	}
 
 	@GetMapping("listar")
 	public String listarEstudantes(Model model) {
 		System.out.println("Passei aqui");
-		model.addAttribute("estudtes", service.buscarEstudantes());
+		model.addAttribute("estudantes", service.buscarEstudantes());
 		return "index";
 	}
 
@@ -55,6 +56,7 @@ public class EstudanteController {
 
 	@PutMapping("atualizar/{id}")
 	public String atualizarEstudante(@PathVariable("id") long id, @Valid Estudante estudante, BindingResult result, Model model) {
+		System.out.println("atualizarEstudante");
 		if (result.hasErrors()) {
 			// estudante.setId(id);
 			return "atualizar-estudante";
@@ -68,6 +70,7 @@ public class EstudanteController {
 
 	@DeleteMapping("apagar/{id}")
 	public String apagarEstudante(@PathVariable("id") long id, Model model) {
+		System.out.println("apagarEstudante");
 		// TODO IMPLEMENTAR A EXCLUSAO DE ESTUDANTES
 		model.addAttribute("estudantes", service.buscarEstudantes());
 		return "index";
