@@ -34,7 +34,6 @@ public class EstudanteRestController {
 	// TODO IMPLEMENTAR CADASTRO DE ESTUDANTES (POST)
 	@PostMapping
 	public ResponseEntity<Estudante> adicionarEstudante(@Valid @RequestBody() Estudante estudante) {
-		System.out.println("Post - adicionar estudande");
 		Estudante cadastrarEstudante = service.cadastrarEstudante(estudante);
 		
 		return new ResponseEntity<>(cadastrarEstudante, HttpStatus.OK);
@@ -43,7 +42,6 @@ public class EstudanteRestController {
 	// TODO IMPLEMENTAR ATUALIZACAO DE ESTUDANTES (PUT)
 	@PutMapping
 	public ResponseEntity<Estudante> atualizarEstudante(@Valid @RequestBody() Estudante estudante) {
-		System.out.println("Put - atualizar estudande");
 		Estudante estudanteSalvo = service.atualizarEstudante(estudante);
 		return new ResponseEntity<>(estudanteSalvo, HttpStatus.OK);
 	}
@@ -51,7 +49,6 @@ public class EstudanteRestController {
 	// TODO IMPLEMENTAR A LISTAGEM DE ESTUDANTES (GET)
 	@GetMapping
 	public ResponseEntity<List<Estudante>> listarTodos() {
-		System.out.println("Get - listar todos estudande");
 		List<Estudante> buscarEstudantes = service.buscarEstudantes();
 		
 		return new ResponseEntity<>(buscarEstudantes, HttpStatus.OK);
@@ -67,7 +64,6 @@ public class EstudanteRestController {
 	// TODO IMPLEMENTAR A EXCLUSÃO DE ESTUDANTES (DELETE)
 	@DeleteMapping(path ={"/{id}"})
 	public ResponseEntity<?> excluirEstudante(@PathVariable Long id) {
-		System.out.println("Get - excluir estudande");
 		if (service.excluirEstudante(id)) {
 			return ResponseEntity.ok().build();
 		} else

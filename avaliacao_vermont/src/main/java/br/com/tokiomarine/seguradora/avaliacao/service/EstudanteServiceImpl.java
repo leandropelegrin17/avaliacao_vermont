@@ -41,7 +41,6 @@ public class EstudanteServiceImpl implements EstudandeService {
 
 	@Override
 	public List<Estudante> buscarEstudantes() {
-		System.out.println("Teste");
 		return repository.findAll();
 	}
 

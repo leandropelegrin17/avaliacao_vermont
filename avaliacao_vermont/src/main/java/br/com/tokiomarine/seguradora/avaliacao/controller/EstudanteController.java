@@ -26,20 +26,17 @@ public class EstudanteController {
 
 	@GetMapping("criar")
 	public String iniciarCastrado(Estudante estudante) {
-		System.out.println("iniciarCastrado");
 		return "cadastrar-estudante";
 	}
 
 	@GetMapping("listar")
 	public String listarEstudantes(Model model) {
-		System.out.println("Passei aqui");
 		model.addAttribute("estudantes", service.buscarEstudantes());
 		return "index";
 	}
 
 	@PostMapping("add")
 	public String adicionarEstudante(@Valid Estudante estudante, BindingResult result, Model model) {
-		System.out.println("adicionarEstudante");
 		if (result.hasErrors()) {
 			return "cadastrar-estudante";
 		}
@@ -50,15 +47,14 @@ public class EstudanteController {
 	}
 
 	@GetMapping("editar/{id}")
-	public String exibirEdicaoEstudante(long id, Model model) {
+	public String exibirEdicaoEstudante(@PathVariable("id") long id, Model model) {
 		Estudante estudante = service.buscarEstudante(id);
 		model.addAttribute("estudante", estudante);
 		return "atualizar-estudante";
 	}
 
-	@PutMapping("atualizar/{id}")
+	@GetMapping("atualizar/{id}")
 	public String atualizarEstudante(@PathVariable("id") long id, @Valid Estudante estudante, BindingResult result, Model model) {
-		System.out.println("atualizarEstudante");
 		if (result.hasErrors()) {
 			// estudante.setId(id);
 			return "atualizar-estudante";
@@ -70,10 +66,9 @@ public class EstudanteController {
 		return "index";
 	}
 
-	@DeleteMapping("apagar/{id}")
+	@GetMapping("apagar/{id}")
 	public String apagarEstudante(@PathVariable("id") long id, Model model) {
-		System.out.println("apagarEstudante");
-		// TODO IMPLEMENTAR A EXCLUSAO DE ESTUDANTES
+		service.excluirEstudante(id);
 		model.addAttribute("estudantes", service.buscarEstudantes());
 		return "index";
 	}
