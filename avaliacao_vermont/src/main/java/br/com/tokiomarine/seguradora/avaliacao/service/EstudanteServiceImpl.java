@@ -5,29 +5,43 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
 import br.com.tokiomarine.seguradora.avaliacao.entidade.Estudante;
 import br.com.tokiomarine.seguradora.avaliacao.repository.EstudanteRepository;
+import lombok.AllArgsConstructor;
 
 // TODO Efetue a implementação dos métodos da classe service
+@Service
+@AllArgsConstructor
 public class EstudanteServiceImpl implements EstudandeService {
 
-	EstudanteRepository repository;
+	@Autowired
+	private EstudanteRepository repository;
 
 	@Override
-	public void cadastrarEstudante(@Valid Estudante estudante) {
+	public Estudante cadastrarEstudante(@Valid Estudante estudante) {
 		
-		repository.save(estudante);
+		@Valid
+		Estudante estudanteCadastrado = repository.save(estudante);
+		
+		return estudanteCadastrado;
 
 	}
 
 	@Override
-	public void atualizarEstudante(@Valid Estudante estudante) {
+	public Estudante atualizarEstudante(@Valid Estudante estudante) {
 
+		Estudante estudanteAtualizado = repository.saveAndFlush(estudante);
+		
+		return estudanteAtualizado;
 	}
 
 	@Override
 	public List<Estudante> buscarEstudantes() {
-		
+		System.out.println("Teste");
 		return repository.findAll();
 	}
 
@@ -41,6 +55,15 @@ public class EstudanteServiceImpl implements EstudandeService {
 		}
 		
 		throw new IllegalArgumentException("Identificador inválido:" + id);
+	}
+
+	@Override
+	public Boolean excluirEstudante(Long id) {
+		return repository.findById(id)
+		           .map(record -> {
+		               repository.deleteById(id);
+		               return true;
+		           }).orElse(false);
 	}
 
 }

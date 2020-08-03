@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tokiomarine.seguradora.avaliacao.entidade.Estudante;
 import br.com.tokiomarine.seguradora.avaliacao.repository.EstudanteRepository;
+import br.com.tokiomarine.seguradora.avaliacao.service.EstudandeService;
 import br.com.tokiomarine.seguradora.avaliacao.service.EstudanteServiceImpl;
 
 // TODO não esquecer de usar as anotações para criação do restcontroller
@@ -26,42 +27,52 @@ import br.com.tokiomarine.seguradora.avaliacao.service.EstudanteServiceImpl;
 public class EstudanteRestController {
 	
 	@Autowired
-	private EstudanteRepository repository;
+	private EstudandeService service;
 
 	// TODO caso você não conheça THEMELEAF faça a implementação dos métodos em forma de RESTCONTROLLER (seguindo o padrão RESTFUL)
 
 	// TODO IMPLEMENTAR CADASTRO DE ESTUDANTES (POST)
 	@PostMapping
 	public ResponseEntity<Estudante> adicionarEstudante(@Valid @RequestBody() Estudante estudante) {
+		System.out.println("Post - adicionar estudande");
+		Estudante cadastrarEstudante = service.cadastrarEstudante(estudante);
 		
-		Estudante estudanteSalvo = repository.save(estudante);
-		return new ResponseEntity<>(estudanteSalvo, HttpStatus.OK);
+		return new ResponseEntity<>(cadastrarEstudante, HttpStatus.OK);
 	}
 
 	// TODO IMPLEMENTAR ATUALIZACAO DE ESTUDANTES (PUT)
 	@PutMapping
 	public ResponseEntity<Estudante> atualizarEstudante(@Valid @RequestBody() Estudante estudante) {
-		
-		Estudante estudanteSalvo = repository.saveAndFlush(estudante);
+		System.out.println("Put - atualizar estudande");
+		Estudante estudanteSalvo = service.atualizarEstudante(estudante);
 		return new ResponseEntity<>(estudanteSalvo, HttpStatus.OK);
 	}
 
 	// TODO IMPLEMENTAR A LISTAGEM DE ESTUDANTES (GET)
 	@GetMapping
 	public ResponseEntity<List<Estudante>> listarTodos() {
-		EstudanteServiceImpl service = new EstudanteServiceImpl();
+		System.out.println("Get - listar todos estudande");
+		List<Estudante> buscarEstudantes = service.buscarEstudantes();
 		
-		List<Estudante> estudantes = repository.findAll();
-		return new ResponseEntity<>(estudantes, HttpStatus.OK);
+		return new ResponseEntity<>(buscarEstudantes, HttpStatus.OK);
+	}
+	
+	@GetMapping(path ={"/{id}"})
+	public ResponseEntity<Estudante> buscarPorId(@PathVariable Long id) {
+		Estudante buscarEstudante = service.buscarEstudante(id);
+		
+		return new ResponseEntity<>(buscarEstudante, HttpStatus.OK);
 	}
 
 	// TODO IMPLEMENTAR A EXCLUSÃO DE ESTUDANTES (DELETE)
 	@DeleteMapping(path ={"/{id}"})
 	public ResponseEntity<?> excluirEstudante(@PathVariable Long id) {
-		return repository.findById(id)
-		           .map(record -> {
-		               repository.deleteById(id);
-		               return ResponseEntity.ok().build();
-		           }).orElse(ResponseEntity.notFound().build());
+		System.out.println("Get - excluir estudande");
+		if (service.excluirEstudante(id)) {
+			return ResponseEntity.ok().build();
+		} else
+			return ResponseEntity.notFound().build();
+		
+		
 	}
 }
